@@ -695,7 +695,7 @@ men =
  *${prefix}grup* open/close
  *${prefix}cekgrup*
  *${prefix}linkgc*`
- frnky.send3Button(from, men, `Time : ${time}`, 'Creator', `${prefix}owner`, 'Script Bot', `${prefix}sourcecode`,'Info Bot',`${prefix}info` , { quoted: Kyz ,contextInfo: {"mentionedJid": [sender]}})
+ frnky.send3Button(from, men, `Time : ${time}`, 'Creator', `${prefix}owner`, 'Website Bot', `${prefix}websitebot`,'Info Bot',`${prefix}info` , { quoted: Kyz ,contextInfo: {"mentionedJid": [sender]}})
                     break
 case 'info':
 fu = `*Info Owner*
@@ -833,10 +833,26 @@ case 'addcmd':
 }
               mentions(teksnyee, cemde, true)
               break
-case 'sourcecode': 
+case 'websitebot': 
        case 'sc': 
        case 'src':
-             frnky.sendButton(from,`Bot ini menggunakan sc : https://github.com/Franky404/Whatsapp-bot`,'Creator: Franky404','BACK TO MENU↩️',`${prefix}help`,{quoted: Kyz})
+             frnky.sendButton(from,
+`*WEBSITE BOT*
+
+• *Shorten Url* :
+frnky.herokuapp.com
+
+• *Rest Api* :
+frangky.herokuapp.com
+
+• *Script Bot Wa* :
+github.com/Franky404/Whatsapp-bot
+
+• *Script Bot Tele* :
+github.com/Franky404/translate-bot-telegram
+
+• *About*:
+frangky.vercel.app`,'Creator: Franky404','BACK TO MENU↩️',`${prefix}help`,{quoted: Kyz})
               break
 case 'ttp':
 case 'attp':
