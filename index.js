@@ -334,7 +334,7 @@ frnky.on('chat-update', async (Kyz) => {
 				}
 			}
 		    const botNumber = frnky.user.jid
-			const ownerNumber = ["6283183586629@s.whatsapp.net"] // Nomor Owner🗿
+			const ownerNumber = ["6283183586629@s.whatsapp.net", "6288286421519@s.whatsapp.net"] // Nomor Owner🗿
 			const ownerContact = ["6283183586629","0"] // Nomor Owner🗿
 			const isGroup = from.endsWith('@g.us')
 			const totalchat = await frnky.chats.all()
@@ -368,12 +368,18 @@ frnky.on('chat-update', async (Kyz) => {
 			const isBanned = ban.includes(sender)
             const IsCodeinvite = join_ky.includes(q)
 			const errorurl2 = 'https://i.ibb.co/bJ9GkwL/20201127-075249.png'
+			
 			const isUrl = (url) => {
 			    return url.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/, 'gi'))
 			}
 			const reply = (teks) => {
 				frnky.sendMessage(from, teks, text, {quoted:Kyz})
 			}
+			let print = function(teks) {
+			    if (typeof teks !== 'string') teks = util.inspect(teks)
+			    teks = util.format(teks)
+			    return reply(teks)
+		}
 			const sendMess = (hehe, teks) => {
 				frnky.sendMessage(hehe, teks, text)
 			}
@@ -568,6 +574,19 @@ break
             require('./lib/fetcher.js').createExif(satu, dua)
 	        require('./lib/fetcher.js').modStick(media, frnky, Kyz, from)
 			break
+			case '>':
+			case '>>': {
+				if (!isOwner) return
+				query = command.includes('>>') ? body.replace('>>', 'return ') : body.replace('>', '')
+				try {
+					let evaled = await eval(`(async () => { ${query} })()`)
+					reply(util.format(evaled))
+				} catch (e) {
+					console.error(e)
+					reply(util.format(e))
+				 }
+			 }
+			break
 case 'sider': 
                 if (!isGroup) return reply(mess.only.group)
                 if (!isQuoted) return reply(`Reply pesan dari bot`)
@@ -592,11 +611,6 @@ case 'mention':
       mentionedJid: frnky.parseMention(q)
     }
   })
-break
-case 'setpp':
-if(!isOwner) return 
-frnky.updateProfilePicture(from, await m.quoted.download())
-
 break
 case 'unban':
 if (!isOwner) return
@@ -1601,19 +1615,6 @@ _media sedang dikirim mungkin butuh beberapa menit_`
 				}
 				
 				break
-case 'tiktok':
-if (isBanned) return reply(mess.only.benned)    
-if (!q) return reply('link tiktokny?')
-var { TiktokDownloader } = require('./lib/tiktokdl')
-reply(mess.wait)
-res = await TiktokDownloader(`${q}`).catch(e => {
-reply('_[ ! ] Server Sedang Error_')
-})
-console.log(res)
-sendMediaURL (from, `${res.result.nowatermark}`,'nih kak')
-break
-
-
 case 'fbdl':
 case 'fb':
 
@@ -1627,21 +1628,50 @@ sendMediaURL (from,`${res.rawVideo}`,`Judul : ${res.title}\nDurasi: ${res.durati
 })
 
 break
-case 'ig':
-case 'igdl':
-		
-                    if (isBanned) return reply(mess.only.benned)    
-				    
-				if (!q) return reply('link Instagramny?')
-	var { igDownloader } = require('./lib/igdown')
-   res = await igDownloader(`${q}`).catch(e => {
-reply('Server sedang Error')
-})
-console.log(res)
-sendMediaURL (from,`${res.result.link}`,`${res.result.desc}`)
-       
-                    break
-
+            case 'instagram':
+			case 'ig':
+			case 'igdl': {
+				if (!q) return reply(`Example: ${prefix}igdl link ig`)
+				if (!isUrl(args[0]) && !args[0].includes('instagram.com')) return reply('Hmm..')
+				reply(mess.wait)
+				await igdl(args[0])
+					.then(res => {
+						let post = res.post
+						for (let i = 0; i < post.length; i++) {
+							let cp = i == 0 ? res.caption : ''
+							frnky.sendFile(from, post[i].url, '', cp, Kyz)
+						}
+					})
+					.catch(err => {
+						console.log(err)
+						reply(String(err))
+					})
+				break
+			}
+		    case 'tiktok': {
+	            if (!q) return reply(`Example: ${prefix}tiktok link tt`)
+				if (!isUrl(args[0]) && !args[0].includes('tiktok.com')) return reply('Hmm..')
+		        reply(mess.wait)
+		        res = await axios.get("https://justnino.herokuapp.com/api/tiktok?url=" + args[0])
+		        data = res.data.result
+		        capt = `🎥 *ID*: ${data.id}\n`
+		        capt += `⚜️ *Nickname*: ${data.nickname}\n`
+		        capt += `❤️ *Like*: ${data.statistic.diggCount}\n`
+		        capt += `💬 *Komentar*: ${data.statistic.commentCount}\n`
+		        capt += `🔁 *Share*: ${data.statistic.shareCount}\n`
+		        capt += `🎞️ *Views*: ${data.statistic.playCount}\n`
+		        capt += `📑 *Desc*: ${data.desk}`
+		        frnky.sendFile(from, data.nowm, '', capt, Kyz)
+				break
+			}
+			case 'ss':
+			case 'ssweb': {
+				if (!args[0]) return reply(`Example: ${prefix}ssweb nekopoi.care`)
+				reply(mess.wait)
+				let url = /https?:\/\//.test(args[0]) ? args[0] : 'https://' + args[0]
+				frnky.sendFile(from, 'https://api.justaqul.xyz/screenshot?url=' + url + '&apikey=beta', 'ss.jpg', url, Kyz)
+				break
+			}
 case 'twitter':
 
                     if (isBanned) return reply(mess.only.benned)    
@@ -1757,6 +1787,21 @@ case 'tourl':
 
 ///**** 🗿🗿🗿🗿🗿🗿 ****//
 default:
+
+function igdl(url) {
+	return new Promise(async (resolve, reject) => {
+		axios.get('https://api.justaqul.xyz/igdl?apikey=xinzbot&url=' + url)
+			.then(({ data }) => {
+				data = data.result
+				let tmt = `User: ${data.owner_user}\n`
+				tmt += `Upload: ${moment(data.date * 1000).locale('id').format('LL')}\n`
+				tmt += `Media Count: ${data.post.length}`
+				resolve({ post: data.post, caption: tmt })
+			})
+			.catch(reject)
+	})
+}
+
 if (fs.existsSync(`./tmp/${from}.json`)) {
 	gelutSkuy = setGelud(`${from}`)
 	if (sender == `${gelutSkuy.Y}@]s.whatsapp.net` && budy.toLowerCase() == 'y') {
@@ -1947,40 +1992,9 @@ ${ttt}`
  frnky.sendMessage(from, ucapan, text, {quoted: Kyz, contextInfo:{mentionedJid: [tty.player1,tty.player2]}})
 } else {
 	}
-if (budy.startsWith('=>')){
-if (!isOwner) return
-try {
-return frnky.sendMessage(from, 
-`${a}📥 Input: ${budy.slice(3)}
+	
 
-📤 OutPut: 
-${JSON.stringify(eval(budy.slice(2)),null,'\t')}
-${a}`
-,text, {quoted:Kyz })
-} catch(err) {
-e = String(err)
-reply(`${a} "err" :  "${e}"${a}`)
-}
-}
-if (budy.startsWith('>')){
-                if (!isOwner) return
-                var konsol = budy.slice(2)
-                Return = (sul) => {
-                var sat = JSON.stringify(sul, null, 2)
-                bang = util.format(sat)
-                if (sat == undefined){
-                bang = util.format(sul)
-                }
-                return reply(bang)
-                }
-                try {
-                reply(util.format(eval(`;(async () => { ${konsol} })()`)))
-                console.log('\x1b[1;37m>', '[', '\x1b[1;32mEXEC\x1b[1;37m', ']', time, color(">", "green"), 'from', color(sender.split('@')[0]), 'args :', color(args.length))
-                } catch(e){
-                 reply(String(e))
-                }
-                }
-   			   		if (isGroup && isCmd && budy != undefined && body.startsWith(`X`)) {
+   			   	if (isGroup && isCmd && budy != undefined && body.startsWith(`X`)) {
 						console.log(budy)
 					} else {
 					}
