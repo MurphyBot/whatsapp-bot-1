@@ -47,7 +47,7 @@ $ npm start
 
 • [`MhankBarBar`](https://github.com/MhankBarBar)
 
-• [`Nino-Chan02`](https://github.com/nino-chan02)
+• [`Nino`](https://github.com/ultimareall)
 
 • [`Ikyads`](https://github.com/rizkiadiasa)
 
