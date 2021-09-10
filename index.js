@@ -1,12 +1,3 @@
-// Button Message
-
-// frnky.sendButtonImg(jid, content, url, footer, button1, row1, options = {}) {
-//frnky.sendButton(jid, content, footer, button1, row1, options = {}) {
-//frnky.send2ButtonImg(jid, content, url, footer, button1, row1, button2, row2, options = {}) {
-// frnky.send2Button(jid, content, footer, button1, row1, button2, row2, options = {}) {
-//frnky.send3Button(jid, content, footer, button1, row1, button2, row2, button3, row3, options = {}) {
-	
-// WAConnection
 const {
   WAConnection: _WAConnection,
   Presence, 
