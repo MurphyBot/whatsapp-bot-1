@@ -1,10 +1,4 @@
-// Button Message
 
-// frnky.sendButtonImg(jid, content, url, footer, button1, row1, options = {}) {
-//frnky.sendButton(jid, content, footer, button1, row1, options = {}) {
-//frnky.send2ButtonImg(jid, content, url, footer, button1, row1, button2, row2, options = {}) {
-// frnky.send2Button(jid, content, footer, button1, row1, button2, row2, options = {}) {
-//frnky.send3Button(jid, content, footer, button1, row1, button2, row2, button3, row3, options = {}) {
 	
 // WAConnection
 const {
@@ -275,7 +269,7 @@ frnky.on('CB:action,,call', async json => {
     const callerId = json[2][0][1].from;
     console.log("call dari "+ callerId)
         ban.push(callerId)
-        frnky.sendMessage(callerId, "Telpon = Block \nAnda di block Karna Telpon Bot \nSilahkan Chat ownerku untuk membuka block!\nwa.me/+6283183586629", MessageType.text)
+        frnky.sendMessage(callerId, "Telpon = Block \nAnda di block Karna Telpon Bot \nSilahkan Chat ownerku untuk membuka block!\nwa.me/6285861870154", MessageType.text)
         await sleep(5000)
         blocked.push(callerId)
         await frnky.blockUser(callerId, "add") // Block user
@@ -334,8 +328,8 @@ frnky.on('chat-update', async (Kyz) => {
 				}
 			}
 		    const botNumber = frnky.user.jid
-			const ownerNumber = ["6283183586629@s.whatsapp.net"] // Nomor Owner🗿
-			const ownerContact = ["6283183586629","0"] // Nomor Owner🗿
+			const ownerNumber = ["6285861870154@s.whatsapp.net"] // Nomor Owner🗿
+			const ownerContact = ["6285861870154","0"] // Nomor Owner🗿
 			const isGroup = from.endsWith('@g.us')
 			const totalchat = await frnky.chats.all()
 			const sender = isGroup ? Kyz.participant : Kyz.key.remoteJid
@@ -634,8 +628,7 @@ case 'exec':
 				case 'menu':
 				if (isBanned) return reply(mess.only.benned)    
 men = 
-`「 *INFORMATION* 」
-
+`
   Hai, @${sender.split("@")[0]}
   
 「 *DOWNLOAD MENU* 」
@@ -664,25 +657,25 @@ men =
  *${prefix}loli*
  *${prefix}waifu*
  *${prefix}husbu*
-「 *GAME MENU* 」
 
+「 *GAME MENU* 」
  *${prefix}tictactoe*
  *${prefix}deltt*
  *${prefix}suit*
  *${prefix}tod*
-「 *VOTING* 」
 
+「 *VOTING* 」
  *${prefix}voting*
  *${prefix}delvote*
  *Vote*
  *Devote*
+ 
 「 *CMD* 」
-
  *${prefix}setcmd*
  *${prefix}delcmd*
  *${prefix}listcmd*
+ 
 「 *INFO MENU* 」
-
  *${prefix}kirim*
  *${prefix}ping*
  *${prefix}wame*
@@ -700,16 +693,15 @@ men =
 case 'info':
 fu = `*Info Owner*
 
-• Name: *Franky*
-• Age: *15*
-• Class: *9 / 3 SMP*
+• Name: *Murphy*
+• Age: *14*
+• Class: *7 / 1 SMP*
 
 *Sosial Media*
 
-• Instagram: ff_franky69
-• Github: Franky404
-• Website: Frangky.vercel.app
-• Teams: Teams404.vercel.app
+• Instagram: ffzkyaf
+• Github: Murphy404
+• Website: justapicca.herokuapp.com
 
  *BOT INFO*`
 frnky.sendButton(from,fu,'Creator: Franky404','BACK TO MENU↩️',`${prefix}help`,{quoted: Kyz})
@@ -834,25 +826,11 @@ case 'addcmd':
               mentions(teksnyee, cemde, true)
               break
 case 'websitebot': 
-       case 'sc': 
-       case 'src':
              frnky.sendButton(from,
 `*WEBSITE BOT*
 
-• *Shorten Url* :
-frnky.herokuapp.com
-
 • *Rest Api* :
-frangky.herokuapp.com
-
-• *Script Bot Wa* :
-github.com/Franky404/Whatsapp-bot
-
-• *Script Bot Tele* :
-github.com/Franky404/translate-bot-telegram
-
-• *About*:
-frangky.vercel.app`,'Creator: Franky404','BACK TO MENU↩️',`${prefix}help`,{quoted: Kyz})
+justapicca.herokuapp.com`,'© By Murphy','Back To Menu↩️',`${prefix}help`,{quoted: Kyz})
               break
 case 'ttp':
 case 'attp':
@@ -1144,7 +1122,7 @@ pinghaha =
 • runtime: ${runtime(process.uptime())}
 
 *Speed* > ${latensii.toFixed(4)} Second!`
-frnky.sendButton(from,pinghaha,'Creator: Franky404','BACK TO MENU↩️',`${prefix}help`,{quoted: Kyz})
+frnky.sendButton(from,pinghaha,'© By Murphy','BACK TO MENU↩️',`${prefix}help`,{quoted: Kyz})
 break
 case 'owner':
 if (isBanned) return reply(mess.only.benned)    
