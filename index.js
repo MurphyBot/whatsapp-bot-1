@@ -1647,7 +1647,7 @@ break
                       anu = await TiktokDownloader(q)
                        console.log(anu)
                        sendMediaURL(from,`${anu.result.nowatermark}`,`nih kak`)
-			
+			break
 			case 'ss':
 			case 'ssweb': {
 				if (!args[0]) return reply(`Example: ${prefix}ssweb nekopoi.care`)
