@@ -19,7 +19,7 @@ $ cd WhatsApp-bot
 $ ls
 $ npm i
 $ npm start
-~ Scan!
+~ Scan 
 ```
 ### Install On Heroku
 
