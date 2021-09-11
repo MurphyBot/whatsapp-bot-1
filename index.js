@@ -1639,22 +1639,15 @@ break
 					})
 				break
 			}
-		    case 'tiktok': {
-	            if (!q) return reply(`Example: ${prefix}tiktok link tt`)
-				if (!isUrl(args[0]) && !args[0].includes('tiktok.com')) return reply('Hmm..')
-		        reply(mess.wait)
-		        res = await axios.get("https://justnino.herokuapp.com/api/tiktok?url=" + args[0])
-		        data = res.data.result
-		        capt = `🎥 *ID*: ${data.id}\n`
-		        capt += `⚜️ *Nickname*: ${data.nickname}\n`
-		        capt += `❤️ *Like*: ${data.statistic.diggCount}\n`
-		        capt += `💬 *Komentar*: ${data.statistic.commentCount}\n`
-		        capt += `🔁 *Share*: ${data.statistic.shareCount}\n`
-		        capt += `🎞️ *Views*: ${data.statistic.playCount}\n`
-		        capt += `📑 *Desc*: ${data.desk}`
-		        frnky.sendFile(from, data.nowm, '', capt, Kyz)
-				break
-			}
+		    case 'tiktok':
+                    case 'tiktokdl':
+                    if(!q) return reply(`Example: ${ prefix + command } https://tiktok.com/xnxx`)
+                     reply(mess.wait)
+                     let { TiktokDownloader } = require('./lib/tiktokdl')
+                      anu = await TiktokDownloader(q)
+                       console.log(anu)
+                       sendMediaURL(from,`${anu.result.nowatermark}`,`nih kak`)
+			
 			case 'ss':
 			case 'ssweb': {
 				if (!args[0]) return reply(`Example: ${prefix}ssweb nekopoi.care`)
