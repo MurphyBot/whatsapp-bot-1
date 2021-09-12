@@ -1270,19 +1270,6 @@ case 'grup':
 					}
 					mentions(teks, groupAdmins, true)
 					break
-
-
-
-case 'pinterest':
-if (isBanned) return reply(mess.only.benned)
-if (!q) return reply('yg mau di cari apa?')
-pinterest(`${q}`).then( data => {
-const amsulah = data.result
-const pimterest = amsulah[Math.floor(Math.random() * amsulah.length)]
-sendMediaURL (from ,pimterest , `Pinterest : ${q}`)
- 
-})
-break
 case 'toimg':
 case 'img':
 				  if (isBanned) return reply(mess.only.benned)
@@ -1605,19 +1592,17 @@ _media sedang dikirim mungkin butuh beberapa menit_`
 				}
 				
 				break
-case 'fbdl':
-case 'fb':
-
-                    if (isBanned) return reply(mess.only.benned)    
-				    
-if (!q) return reply('Linknya?')
-const fbdl = require("fbdl-core")
-fbdl.getInfo(`${q}`).then( res => {
-console.log(res)
-sendMediaURL (from,`${res.rawVideo}`,`Judul : ${res.title}\nDurasi: ${res.duration}\nUploadedAt : ${res.uploadedAt}\nPublishedAt : ${res.publishedAt}`)
-})
-
-break
+            case 'fbdl':
+            case 'fb':
+            case 'facebook': {
+                if (isBanned) return reply(mess.only.benned)        
+                if (!q) return reply(`Example: ${prefix}fb link fb`)
+                fetchJson(`https://api.lolhuman.xyz/api/facebook?apikey=c3eecdec6672f68b299df380&url=${args[0]}`).then( res => {
+                console.log(res)
+                frnky.sendFile(from, data.result, '', '', Kyz)
+             })
+             break
+            }
             case 'instagram':
 			case 'ig':
 			case 'igdl': {
@@ -1639,14 +1624,15 @@ break
 				break
 			}
 		    case 'tiktok':
-                    case 'tiktokdl':
-                    if(!q) return reply(`Example: ${ prefix + command } https://tiktok.com/xnxx`)
-                     reply(mess.wait)
-                     let { TiktokDownloader } = require('./lib/tiktokdl')
-                      anu = await TiktokDownloader(q)
-                       console.log(anu)
-                       sendMediaURL(from,`${anu.result.nowatermark}`,`nih kak`)
-			break
+            case 'tiktokdl': {
+                if(!q) return reply(`Example: ${ prefix + command } https://tiktok.com/xnxx`)
+                reply(mess.wait)
+                let { TiktokDownloader } = require('./lib/tiktokdl')
+                anu = await TiktokDownloader(q)
+                console.log(anu)
+                frnky.sendFile(from, anu.result.nowatermark, '', `nih kak`, Kyz)
+			    break
+		    }
 			case 'ss':
 			case 'ssweb': {
 				if (!args[0]) return reply(`Example: ${prefix}ssweb nekopoi.care`)
@@ -1670,6 +1656,16 @@ break
                     })
 			    break
 		      }
+		      case 'pinterest': {
+                   if (isBanned) return reply(mess.only.benned)
+                   if (!q) return reply('yg mau di cari apa?')
+                   pinterest(`${q}`).then( data => {
+                   const amsulah = data.result
+                   const pimterest = amsulah[Math.floor(Math.random() * amsulah.length)]
+                   frnky.sendFile(from , pimterest , '', `Pinterest : ${q}`, Kyz)
+                })
+                   break
+                 }
                       case 'twitter':
 
                     if (isBanned) return reply(mess.only.benned)    
@@ -1782,9 +1778,7 @@ case 'tourl':
             }
             
             break
-
-///**** 🗿🗿🗿🗿🗿🗿 ****//
-default:
+            default:
 
 function igdl(url) {
 	return new Promise(async (resolve, reject) => {
