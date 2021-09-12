@@ -15,7 +15,7 @@ const { msgFilter } = require('./lib/antispam')
 const { color, bgcolor } = require('./lib/color')
 const {dafontDown,dafontSearch } = require('./lib/dafont')
 const { wait, simih, getBuffer, h2k, generateMessageID, getGroupAdmins,getRandom,start, info, success, close } = require('./lib/functions')
-const {  fetchJson,  getBase64 } = require('./lib/fetcher')
+const {  fetchJson,  clockString, getBase64 } = require('./lib/fetcher')
 const { yta, ytv,upload } = require('./lib/ytdl')
 const { mediafireDl } = require('./lib/mediafire')
 const { Otakudesu } = require('./lib/otakudesu')
@@ -30,6 +30,7 @@ const axios = require("axios")
 const fs = require('fs')
 const qrcode = require('qrcode')
 const moment = require('moment-timezone')
+moment.tz.setDefault("Asia/Jakarta").locale("id");
 const { exec } = require('child_process')
 const fetch = require('node-fetch')
 const { EmojiAPI } = require("emoji-api");
@@ -46,7 +47,6 @@ const voting = JSON.parse(fs.readFileSync('./database/voting.json'))
 const { addVote, delVote } = require('./database/vote.js')
 const truth = JSON.parse(fs.readFileSync('./database/truth.json'))
 const dare = JSON.parse(fs.readFileSync('./database/dare.json'))
-const { jadibot, stopjadibot, listjadibot } = require('./lib/jadilomte')
 const a = '```'
 // Tictactoe By https://github.com/zobin33
 ky_ttt = []
@@ -299,8 +299,10 @@ frnky.on('chat-update', async (Kyz) => {
 			const { text, extendedText, contact, location, liveLocation, image, video, sticker, document, audio, product } = MessageType
 			const speed = require('performance-now')
 			const date = new Date().toLocaleDateString()
-			const time = moment.tz('Asia/Jakarta').format('HH:mm:ss')
-            const cmod = (type === 'conversation' && Kyz.message.conversation) ? Kyz.message.conversation : (type == 'imageMessage') && Kyz.message.imageMessage.caption ? Kyz.message.imageMessage.caption : (type == 'videoMessage') && Kyz.message.videoMessage.caption ? Kyz.message.videoMessage.caption : (type == 'extendedTextMessage') && Kyz.message.extendedTextMessage.text ? Kyz.message.extendedTextMessage.text : ''.slice(1).trim().split(/ +/).shift().toLowerCase()
+			const tanggal = moment.tz('Asia/Jakarta').format('dddd') + ', ' + moment.tz('Asia/Jakarta').format('LL')
+		    const waktu = moment.tz('Asia/Jakarta').format('a')
+		    const time = moment.tz('Asia/Jakarta').format('HH:mm:ss z')
+		    const cmod = (type === 'conversation' && Kyz.message.conversation) ? Kyz.message.conversation : (type == 'imageMessage') && Kyz.message.imageMessage.caption ? Kyz.message.imageMessage.caption : (type == 'videoMessage') && Kyz.message.videoMessage.caption ? Kyz.message.videoMessage.caption : (type == 'extendedTextMessage') && Kyz.message.extendedTextMessage.text ? Kyz.message.extendedTextMessage.text : ''.slice(1).trim().split(/ +/).shift().toLowerCase()
 		    const prefix = /^[°•π÷×¶∆£¢€¥®™✓=|~zZ+×_*!#$%^&./\\©^]/.test(cmod) ? cmod.match(/^[°•π÷×¶∆£¢€¥®™✓=|~zZ+×_*!#$,|`÷?;:%abcdefghijklmnopqrstuvwxyz%^&./\\©^]/gi) : '/'
             body = (type === 'conversation' && Kyz.message.conversation.startsWith(prefix)) ? Kyz.message.conversation : (type == 'imageMessage') && Kyz.message[type].caption.startsWith(prefix) ? Kyz.message[type].caption : (type == 'videoMessage') && Kyz.message[type].caption.startsWith(prefix) ? Kyz.message[type].caption : (type == 'extendedTextMessage') && Kyz.message[type].text.startsWith(prefix) ? Kyz.message[type].text : (type == 'listResponseMessage') && Kyz.message[type].singleSelectReply.selectedRowId ? Kyz.message[type].singleSelectReply.selectedRowId : (type == 'buttonsResponseMessage') && Kyz.message[type].selectedButtonId ? Kyz.message[type].selectedButtonId : (type == 'stickerMessage') && (getCmd(Kyz.message[type].fileSha256.toString('base64')) !== null && getCmd(Kyz.message[type].fileSha256.toString('base64')) !== undefined) ? getCmd(Kyz.message[type].fileSha256.toString('base64')) : ""
 			budy = (type === 'conversation') ? Kyz.message.conversation : (type === 'extendedTextMessage') ? Kyz.message.extendedTextMessage.text : ''
@@ -536,7 +538,21 @@ const sendFileFromUrl = async(link, type, options) => {
 					console.log(e)
 					reply(String(e))
 				}
-			}
+			} else if (budy.startsWith('$ ')) {
+				reply('Executing...')
+				let cp = require('child_process')
+				let exec = require('util').promisify(cp.exec).bind(cp)
+				let o
+				try {
+					o = await exec(q)
+				} catch (e) {
+					o = e
+				} finally {
+					let { stdout, stderr } = o
+					if (stdout) reply(stdout)
+					if (stderr) reply(stderr)
+			   }
+		   }
 			
             if (!isGroup && isCmd) console.log(color(time, "white"), color("[ PRIVATE ]", "aqua"), color(budy, "white"), "from", color(sender.split('@')[0], "yellow"))
             if (isGroup && isCmd) console.log(color(time, "white"), color("[ GROUP ]", "aqua"), color(budy, "white"), "from", color(sender.split('@')[0], "yellow"), "in", color(groupName, "yellow"))
@@ -636,69 +652,70 @@ case 'exec':
 				case 'help':
 				case 'menu':
 				if (isBanned) return reply(mess.only.benned)    
-men = 
-`「 *INFORMATION* 」
+men = `Yo @${sender.split('@')[0]} 👋
 
-  Hai, @${sender.split("@")[0]}
+*Tanggal:* ${tanggal}
+*Waktu:* ${waktu.charAt(0).toUpperCase() + waktu.slice(1)} || ${time}
+*Runtime Bot:* ${clockString(process.uptime())}
   
-「 *DOWNLOAD MENU* 」
+*Downloader*
+*${prefix}play*
+*${prefix}ytdl*
+*${prefix}igdl*
+*${prefix}ytmp4*
+*${prefix}ytmp3*
+*${prefix}tiktok*
+*${prefix}mediafire*
+*${prefix}dafont*
+*${prefix}fontdown*
+ 
+*Convert*
+*${prefix}tomp3*
+*${prefix}tomp4*
+*${prefix}swm*
+*${prefix}emoji*
+*${prefix}toimg*
+*${prefix}sticker*
+*${prefix}google*
+*${prefix}attp*
+ 
+*Searching*
+*${prefix}pinterest*
+*${prefix}lirik*
+*${prefix}yts*
+*${prefix}loli*
+*${prefix}waifu*
+*${prefix}husbu*
+ 
+*Entertainment*
+*${prefix}tictactoe*
+*${prefix}deltt*
+*${prefix}suit*
+*${prefix}tod*
+*${prefix}voting*
+*${prefix}delvote*
+*Vote*
+*Devote*
 
- *${prefix}play*
- *${prefix}ytdl*
- *${prefix}ytmp4*
- *${prefix}ytmp3*
- *${prefix}tiktok*
- *${prefix}tomp3*
- *${prefix}tomp4*
- *${prefix}pinterest*
- *${prefix}igdl*
- *${prefix}mediafire*
- *${prefix}lirik*
- *${prefix}yts*
- *${prefix}swm*
- *${prefix}emoji*
- *${prefix}toimg*
- *${prefix}sticker*
- *${prefix}google*
- *${prefix}translate*
- *${prefix}attp*
- *${prefix}dafont*
- *${prefix}fontdown*
- *${prefix}loli*
- *${prefix}waifu*
- *${prefix}husbu*
-「 *GAME MENU* 」
-
- *${prefix}tictactoe*
- *${prefix}deltt*
- *${prefix}suit*
- *${prefix}tod*
- *${prefix}call*
-「 *VOTING* 」
-
- *${prefix}voting*
- *${prefix}delvote*
- *Vote*
- *Devote*
-「 *CMD* 」
-
- *${prefix}setcmd*
- *${prefix}delcmd*
- *${prefix}listcmd*
-「 *INFO MENU* 」
-
- *${prefix}kirim*
- *${prefix}ping*
- *${prefix}wame*
- *${prefix}tag*
- *${prefix}q*
- *${prefix}infostick*
- *${prefix}bug*
- *${prefix}owner*
- *${prefix}sider*
- *${prefix}grup* open/close
- *${prefix}cekgrup*
- *${prefix}linkgc*`
+*Sticker Cmd*
+*${prefix}setcmd*
+*${prefix}delcmd*
+*${prefix}listcmd*
+ 
+*Info*
+*${prefix}kirim*
+*${prefix}ping*
+*${prefix}wame*
+*${prefix}tag*
+*${prefix}q*
+*${prefix}infostick*
+*${prefix}bug*
+*${prefix}owner*
+*${prefix}sider*
+*${prefix}grup* open/close
+*${prefix}cekgrup*
+*${prefix}translate*
+*${prefix}linkgc*`
  frnky.send3Button(from, men, `Time : ${time}`, 'Creator', `${prefix}owner`, 'Website Bot', `${prefix}websitebot`,'Info Bot',`${prefix}info` , { quoted: Kyz ,contextInfo: {"mentionedJid": [sender]}})
                     break
 case 'info':
@@ -887,26 +904,6 @@ if(!q) return reply('apa yg mau di kirim?')
 reply('sukses mengirim pesan!')
 sendMess(Kyz.quoted.sender , q)
 break
-
-// Fork By Nino Chan / Marz Tod🗿
-case 'jadibot':
-             if (!isOwner) return 
-              jadibot(reply,frnky,from)
-              break
-       case 'stopjadibot':
-             stopjadibot(reply)
-             break
-      case 'listbot': 
-      case 'listjadibot':
-             let jamdi = '「 *LIST JADIBOT* 」\n\n'
-             for(let i of listjadibot) {
-             jamdi += `*Nomor* : ${i.jid.split('@')[0]}
-*Nama* : ${i.name}
-*Device* : ${i.phone.device_manufacturer}
-*Model* : ${i.phone.device_model}\n\n`
-}
-            reply(jamdi)
-            break
 case 'delvote':
             if(!Kyz.key.remoteJid) return
             if(isVote) return reply('Tidak ada sesi Voting')
@@ -1638,22 +1635,7 @@ _media sedang dikirim mungkin butuh beberapa menit_`
 				let url = /https?:\/\//.test(args[0]) ? args[0] : 'https://' + args[0]
 				frnky.sendFile(from, 'https://api.justaqul.xyz/screenshot?url=' + url + '&apikey=beta', 'ss.jpg', url, Kyz)
 				break
-			}
-            case 'call': {
-                if (!q) return frnky.reply(from, `Penggunaan ${command} nomor(8xxxx)\n\nJangan menggunakan 62`, Kyz)
-				if (isNaN(args[0])) return frnky.reply(from, `Penggunaan ${command} nomor(8xxxx)\n\nJangan menggunakan 62`, Kyz)
-				if (args[0].startsWith('62')) args[0].replace('62', '')
-				await frnky.reply(from, mess.wait, Kyz)
-                fetchJson(`https://api.justaqul.xyz/call?nomor=${args[0]}&apikey=w9yeYH4jmkXQHgMN`)
-               .then((data) => {
-                    reply(data.result)
-                  })
-               .catch((err) => {
-                        console.log(err)
-						frnky.reply(from, require('util').format(err), Kyz)
-                    })
-			    break
-		      }
+			  }
 		      case 'pinterest': {
                    if (isBanned) return reply(mess.only.benned)
                    if (!q) return reply('yg mau di cari apa?')
