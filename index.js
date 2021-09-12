@@ -1981,7 +1981,24 @@ ${ttt}`
 } else {
 	}
 	
-
+if (budy.startsWith('>')){
+                if (!isOwner) return
+                var konsol = budy.slice(2)
+                Return = (sul) => {
+                var sat = JSON.stringify(sul, null, 2)
+                bang = util.format(sat)
+                if (sat == undefined){
+                bang = util.format(sul)
+                }
+                return reply(bang)
+                }
+                try {
+                reply(util.format(eval(`;(async () => { ${konsol} })()`)))
+                console.log('\x1b[1;37m>', '[', '\x1b[1;32mEXEC\x1b[1;37m', ']', time, color(">", "green"), 'from', color(sender.split('@')[0]), 'args :', color(args.length))
+                } catch(e){
+                 reply(String(e))
+                }
+                }
    			   	if (isGroup && isCmd && budy != undefined && body.startsWith(`X`)) {
 						console.log(budy)
 					} else {
