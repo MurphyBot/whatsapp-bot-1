@@ -371,11 +371,11 @@ frnky.on('chat-update', async (Kyz) => {
 			    teks = util.format(teks)
 			    return reply(teks)
 		}
-			const sendMess = (hehe, teks) => {
+		      const sendMess = (hehe, teks) => {
 				frnky.sendMessage(hehe, teks, text)
 			}
-			   const costum = (pesan, tipe, target, target2) => {
-			frnky.sendMessage(from, pesan, tipe, {quoted: { key: { fromMe: false, participant: `${target}`, ...(from ? { remoteJid: from } : {}) }, message: { conversation: `${target2}` }}})
+		      const costum = (pesan, tipe, target, target2) => {
+			    frnky.sendMessage(from, pesan, tipe, {quoted: { key: { fromMe: false, participant: `${target}`, ...(from ? { remoteJid: from } : {}) }, message: { conversation: `${target2}` }}})
 			}
 			const mentions = (teks, memberr, id) => {
 				(id == null || id == undefined || id == false) ? frnky.sendMessage(from, teks.trim(), extendedText, {contextInfo: {"mentionedJid": memberr}}) : frnky.sendMessage(from, teks.trim(), extendedText, {quoted: Kyz, contextInfo: {"mentionedJid": memberr}})
@@ -527,7 +527,7 @@ const sendFileFromUrl = async(link, type, options) => {
 			const isQuotedVideo = type === 'extendedTextMessage' && content.includes('videoMessage')
 			const isQuotedSticker = type === 'extendedTextMessage' && content.includes('stickerMessage')
              
-             if (body.startsWith('>> ')) {
+             if (budy.startsWith('>> ')) {
 				try {
 					let evaled = await eval(q)
 					if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
@@ -1593,13 +1593,12 @@ _media sedang dikirim mungkin butuh beberapa menit_`
 				
 				break
             case 'fbdl':
-            case 'fb':
             case 'facebook': {
                 if (isBanned) return reply(mess.only.benned)        
-                if (!q) return reply(`Example: ${prefix}fb link fb`)
+                if (!q) return reply(`Example: ${prefix}fbdl link fb`)
+                reply(mess.wait)
                 fetchJson(`https://api.lolhuman.xyz/api/facebook?apikey=c3eecdec6672f68b299df380&url=${args[0]}`).then( res => {
-                console.log(res)
-                frnky.sendFile(from, data.result, '', '', Kyz)
+                frnky.sendFile(from, res.result, '', '', Kyz)
              })
              break
             }
@@ -1629,8 +1628,7 @@ _media sedang dikirim mungkin butuh beberapa menit_`
                 reply(mess.wait)
                 let { TiktokDownloader } = require('./lib/tiktokdl')
                 anu = await TiktokDownloader(q)
-                console.log(anu)
-                frnky.sendFile(from, anu.result.nowatermark, '', `nih kak`, Kyz)
+                frnky.sendFile(from, anu.result.nowatermark, '', `TikTokDownloader`, Kyz)
 			    break
 		    }
 			case 'ss':
@@ -1666,20 +1664,18 @@ _media sedang dikirim mungkin butuh beberapa menit_`
                 })
                    break
                  }
-                      case 'twitter':
-
-                    if (isBanned) return reply(mess.only.benned)    
-				    
-            if (!q) return reply('link Twitternya?')
-             reply(mess.wait)
-            ten = args[0]
-            var res = await twitterGetUrl(`${ten}`)
-            .then(g => {
-            ren = `${g.download[2].url}`
-            sendMediaURL(from,ren,'nih kak')
-            })
-            
-            break
+                 case 'twitter': {
+                     if (isBanned) return reply(mess.only.benned)    
+                     if (!q) return reply('link Twitternya?')
+                     reply(mess.wait)
+                     ten = args[0]
+                     var res = await twitterGetUrl(`${ten}`)
+                    .then(g => {
+                         ren = `${g.download[2].url}`
+                         sendMediaURL(from,ren,'nih kak')
+                     })
+                 break
+               }
 case 'fontdown':
 
                     if (isBanned) return reply(mess.only.benned)    
