@@ -675,6 +675,7 @@ men =
  *${prefix}deltt*
  *${prefix}suit*
  *${prefix}tod*
+ *${prefix}call*
 「 *VOTING* 」
 
  *${prefix}voting*
