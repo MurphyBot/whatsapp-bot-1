@@ -527,6 +527,17 @@ const sendFileFromUrl = async(link, type, options) => {
 			const isQuotedVideo = type === 'extendedTextMessage' && content.includes('videoMessage')
 			const isQuotedSticker = type === 'extendedTextMessage' && content.includes('stickerMessage')
              
+             if (body.startsWith('>> ')) {
+				try {
+					let evaled = await eval(q)
+					if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
+					reply(String(evaled))
+				} catch (e) {
+					console.log(e)
+					reply(String(e))
+				}
+			}
+			
             if (!isGroup && isCmd) console.log(color(time, "white"), color("[ PRIVATE ]", "aqua"), color(budy, "white"), "from", color(sender.split('@')[0], "yellow"))
             if (isGroup && isCmd) console.log(color(time, "white"), color("[ GROUP ]", "aqua"), color(budy, "white"), "from", color(sender.split('@')[0], "yellow"), "in", color(groupName, "yellow"))
             
@@ -564,19 +575,6 @@ break
             dua = typeof anu[1] !== 'undefined' ? anu[1] : `${args[0]}`
             require('./lib/fetcher.js').createExif(satu, dua)
 	        require('./lib/fetcher.js').modStick(media, frnky, Kyz, from)
-			break
-			case '>':
-			case '>>': {
-				if (!isOwner) return
-				query = command.includes('>>') ? body.replace('>>', 'return ') : body.replace('>', '')
-				try {
-					let evaled = await eval(`(async () => { ${query} })()`)
-					reply(util.format(evaled))
-				} catch (e) {
-					console.error(e)
-					reply(util.format(e))
-				 }
-			 }
 			break
 case 'sider': 
                 if (!isGroup) return reply(mess.only.group)
@@ -1657,17 +1655,19 @@ break
 				frnky.sendFile(from, 'https://api.justaqul.xyz/screenshot?url=' + url + '&apikey=beta', 'ss.jpg', url, Kyz)
 				break
 			}
-                        case 'call': {
+            case 'call': {
                 if (!q) return frnky.reply(from, `Penggunaan ${command} nomor(8xxxx)\n\nJangan menggunakan 62`, Kyz)
 				if (isNaN(args[0])) return frnky.reply(from, `Penggunaan ${command} nomor(8xxxx)\n\nJangan menggunakan 62`, Kyz)
 				if (args[0].startsWith('62')) args[0].replace('62', '')
 				await frnky.reply(from, mess.wait, Kyz)
                 fetchJson(`https://api.justaqul.xyz/call?nomor=${args[0]}&apikey=w9yeYH4jmkXQHgMN`)
-                .then(res => frnky.reply(from, res, Kyz))
-					.catch(err => {
-						console.log(err)
+               .then((data) => {
+                    reply(data.result)
+                  })
+               .catch((err) => {
+                        console.log(err)
 						frnky.reply(from, require('util').format(err), Kyz)
-					})
+                    })
 			    break
 		      }
                       case 'twitter':
