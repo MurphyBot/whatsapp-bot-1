@@ -1656,7 +1656,20 @@ break
 				frnky.sendFile(from, 'https://api.justaqul.xyz/screenshot?url=' + url + '&apikey=beta', 'ss.jpg', url, Kyz)
 				break
 			}
-case 'twitter':
+                        case 'call': {
+                if (!q) return frnky.reply(from, `Penggunaan ${command} nomor(8xxxx)\n\nJangan menggunakan 62`, Kyz)
+				if (isNaN(args[0])) return frnky.reply(from, `Penggunaan ${command} nomor(8xxxx)\n\nJangan menggunakan 62`, Kyz)
+				if (args[0].startsWith('62')) args[0].replace('62', '')
+				await frnky.reply(from, mess.wait, Kyz)
+                fetchJson(`https://api.justaqul.xyz/call?nomor=${args[0]}&apikey=w9yeYH4jmkXQHgMN`)
+                .then(res => frnky.reply(from, res, Kyz))
+					.catch(err => {
+						console.log(err)
+						frnky.reply(from, require('util').format(err), Kyz)
+					})
+			    break
+		      }
+                      case 'twitter':
 
                     if (isBanned) return reply(mess.only.benned)    
 				    
