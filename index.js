@@ -19,6 +19,7 @@ const {  fetchJson,  clockString, getBase64 } = require('./lib/fetcher')
 const { yta, ytv,upload } = require('./lib/ytdl')
 const { mediafireDl } = require('./lib/mediafire')
 const { Otakudesu } = require('./lib/otakudesu')
+const { tiktokDownloader } = require('./lib/tiktokdl')
 const { pinterest } = require('./lib/pinterest')
 const { recognize } = require('./lib/ocr')
 const { webp2mp4File} = require('./lib/webp2mp4')
@@ -1623,9 +1624,21 @@ _media sedang dikirim mungkin butuh beberapa menit_`
             case 'tiktokdl': {
                 if(!q) return reply(`Example: ${ prefix + command } https://tiktok.com/xnxx`)
                 reply(mess.wait)
-                let { TiktokDownloader } = require('./lib/tiktokdl')
-                anu = await TiktokDownloader(q)
-                frnky.sendFile(from, anu.result.nowatermark, '', `TikTokDownloader`, Kyz)
+                await tiktokDownloader(q).then(data => {
+                let cp = `*Tiktok Downloader*\n\n`
+                cp += '*ID :* ' + data.id + '\n'
+                cp += '*Name / Nickname :* ' + data.username + '/' + data.nickname + '\n'
+                cp += '*Durasi :* ' + data.durasi + '\n'
+                cp += '*Upload :* ' + data.tanggal_buat + '\n'
+                cp += '*Like :* ' + data.statistic.diggCount + '\n'
+                cp += '*Komentar :* ' + data.statistic.commentCount + '\n'
+                cp += '*Share :* ' + data.statistic.shareCount + '\n'
+                cp += '*Tayangan :* ' + data.statistic.playCount + '\n'
+                cp += '*Nama Musik :* ' + data.music.title + '\n'
+                cp += '*Author Musik :* ' + data.music.authorName + '\n'
+                cp += '*Deskripsi :* \n' + data.desk
+             })
+                frnky.sendFile(from, data.nowm, '', cp, Kyz)
 			    break
 		    }
 			case 'ss':
