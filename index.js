@@ -1625,7 +1625,7 @@ _media sedang dikirim mungkin butuh beberapa menit_`
                 if(!q) return reply(`Example: ${ prefix + command } https://vt.tiktok.com/ZSJEmpuox/`)
                 reply(mess.wait)
                 data = await fetchJson(`https://frangky.herokuapp.com/api/tiktok?url=${q}&apikey=R3M8aQ5H`)
-                frnky.sendFile(from, data.result.nowatermark, '', 'nih kak :)', Kyz)
+                 sendMediaURL(from, `${data.result.nowatermark}`,`nih kak`)
 			    break
 		    }
 			case 'ss':
