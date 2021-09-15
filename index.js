@@ -1622,23 +1622,18 @@ _media sedang dikirim mungkin butuh beberapa menit_`
 			}
 		    case 'tiktok':
             case 'tiktokdl': {
-                if(!q) return reply(`Example: ${ prefix + command } https://tiktok.com/xnxx`)
+                if(!q) return reply(`Example: ${ prefix + command } https://vt.tiktok.com/ZSJEmpuox/`)
                 reply(mess.wait)
-                await tiktokDownloader(q).then(data => {
-                let cp = `*Tiktok Downloader*\n\n`
-                cp += '*ID :* ' + data.id + '\n'
-                cp += '*Name / Nickname :* ' + data.username + '/' + data.nickname + '\n'
-                cp += '*Durasi :* ' + data.durasi + '\n'
-                cp += '*Upload :* ' + data.tanggal_buat + '\n'
-                cp += '*Like :* ' + data.statistic.diggCount + '\n'
-                cp += '*Komentar :* ' + data.statistic.commentCount + '\n'
-                cp += '*Share :* ' + data.statistic.shareCount + '\n'
-                cp += '*Tayangan :* ' + data.statistic.playCount + '\n'
-                cp += '*Nama Musik :* ' + data.music.title + '\n'
-                cp += '*Author Musik :* ' + data.music.authorName + '\n'
-                cp += '*Deskripsi :* \n' + data.desk
-             })
-                frnky.sendFile(from, data.nowm, '', cp, Kyz)
+                res = await axios.get("https://justnino.herokuapp.com/api/tiktok?url=" + args[0])
+		        data = res.data.result
+		        capt = `🎥 *ID*: ${data.id}\n`
+		        capt += `⚜️ *Nickname*: ${data.nickname}\n`
+		        capt += `❤️ *Like*: ${data.statistic.diggCount}\n`
+		        capt += `💬 *Komentar*: ${data.statistic.commentCount}\n`
+		        capt += `🔁 *Share*: ${data.statistic.shareCount}\n`
+		        capt += `🎞️ *Views*: ${data.statistic.playCount}\n`
+		        capt += `📑 *Desc*: ${data.desk}`
+                frnky.sendFile(from, data.nowm, '', capt, Kyz)
 			    break
 		    }
 			case 'ss':
