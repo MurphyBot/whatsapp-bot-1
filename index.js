@@ -1624,21 +1624,8 @@ _media sedang dikirim mungkin butuh beberapa menit_`
             case 'tiktokdl': {
                 if(!q) return reply(`Example: ${ prefix + command } https://vt.tiktok.com/ZSJEmpuox/`)
                 reply(mess.wait)
-                res = await axios.get("https://justnino.herokuapp.com/api/tiktok?url=" + args[0])
-		        data = res.data.result
-		        let capt = `*Tiktok Downloader*\n\n`
-		        capt += `*ID :* ${data.id}\n`
-		        capt += `*Name / Nickname :* ${data.username} / ${data.nickname}\n`
-		        capt += `*Durasi :* ${data.durasi}\n`
-		        capt += `*Upload :* ${data.tanggal_buat}\n`
-		        capt += `*Like :* ${data.statistic.diggCount}\n`
-		        capt += `*Komentar :* ${data.statistic.commentCount}\n`
-		        capt += `*Share :* ${data.statistic.shareCount}\n`
-		        capt += `*Tayangan :* ${data.statistic.playCount}\n`
-                capt += `*Nama Musik :* ${data.music.title}\n`
-                capt += `*Author Musik :* ${data.music.authorName}\n`
-                capt += `*Deskripsi :* ${data.desk}`
-                frnky.sendFile(from, data.nowm, '', capt, Kyz)
+                data = await fetchJson(`https://frangky.herokuapp.com/api/tiktok?url=${q}&apikey=R3M8aQ5H`)
+                frnky.sendFile(from, data.result.nowatermark, '', 'nih kak :)', Kyz)
 			    break
 		    }
 			case 'ss':
