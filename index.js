@@ -1626,13 +1626,18 @@ _media sedang dikirim mungkin butuh beberapa menit_`
                 reply(mess.wait)
                 res = await axios.get("https://justnino.herokuapp.com/api/tiktok?url=" + args[0])
 		        data = res.data.result
-		        capt = `🎥 *ID*: ${data.id}\n`
-		        capt += `⚜️ *Nickname*: ${data.nickname}\n`
-		        capt += `❤️ *Like*: ${data.statistic.diggCount}\n`
-		        capt += `💬 *Komentar*: ${data.statistic.commentCount}\n`
-		        capt += `🔁 *Share*: ${data.statistic.shareCount}\n`
-		        capt += `🎞️ *Views*: ${data.statistic.playCount}\n`
-		        capt += `📑 *Desc*: ${data.desk}`
+		        let capt = `*Tiktok Downloader*\n\n`
+		        capt += `*ID :* ${data.id}\n`
+		        capt += `*Name / Nickname :* ${data.username} / ${data.nickname}\n`
+		        capt += `*Durasi :* ${data.durasi}\n`
+		        capt += `*Upload :* ${data.tanggal_buat}\n`
+		        capt += `*Like :* ${data.statistic.diggCount}\n`
+		        capt += `*Komentar :* ${data.statistic.commentCount}\n`
+		        capt += `*Share :* ${data.statistic.shareCount}\n`
+		        capt += `*Tayangan :* ${data.statistic.playCount}\n`
+                capt += `*Nama Musik :* ${data.music.title}\n`
+                capt += `*Author Musik :* ${data.music.authorName}\n`
+                capt += `*Deskripsi :* ${data.desk}`
                 frnky.sendFile(from, data.nowm, '', capt, Kyz)
 			    break
 		    }
