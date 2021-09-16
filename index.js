@@ -19,7 +19,7 @@ const {  fetchJson,  clockString, getBase64 } = require('./lib/fetcher')
 const { yta, ytv,upload } = require('./lib/ytdl')
 const { mediafireDl } = require('./lib/mediafire')
 const { Otakudesu } = require('./lib/otakudesu')
-const { igDownloader } = require ('lib/igdown')
+const { igDownloader } = require ('./lib/igdown')
 const { tiktokDownloader } = require('./lib/tiktokdl')
 const { pinterest } = require('./lib/pinterest')
 const { recognize } = require('./lib/ocr')
@@ -1609,6 +1609,7 @@ _media sedang dikirim mungkin butuh beberapa menit_`
 				reply(mess.wait)
 				anu = await igDownloader (q)
                                 sendMediaURL(from,`${anu.result.link}`,'nih kak')
+                                 break
 		    case 'tiktok':
             case 'tiktokdl': {
                 if(!q) return reply(`Example: ${ prefix + command } https://vt.tiktok.com/ZSJEmpuox/`)
