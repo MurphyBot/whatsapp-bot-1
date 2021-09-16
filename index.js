@@ -19,6 +19,7 @@ const {  fetchJson,  clockString, getBase64 } = require('./lib/fetcher')
 const { yta, ytv,upload } = require('./lib/ytdl')
 const { mediafireDl } = require('./lib/mediafire')
 const { Otakudesu } = require('./lib/otakudesu')
+const { igDownloader } = require ('lib/igdown')
 const { tiktokDownloader } = require('./lib/tiktokdl')
 const { pinterest } = require('./lib/pinterest')
 const { recognize } = require('./lib/ocr')
@@ -1602,24 +1603,12 @@ _media sedang dikirim mungkin butuh beberapa menit_`
             }
             case 'instagram':
 			case 'ig':
-			case 'igdl': {
+			case 'igdl': 
 				if (!q) return reply(`Example: ${prefix}igdl link ig`)
 				if (!isUrl(args[0]) && !args[0].includes('instagram.com')) return reply('Hmm..')
 				reply(mess.wait)
-				await igdl(args[0])
-					.then(res => {
-						let post = res.post
-						for (let i = 0; i < post.length; i++) {
-							let cp = i == 0 ? res.caption : ''
-							frnky.sendFile(from, post[i].url, '', cp, Kyz)
-						}
-					})
-					.catch(err => {
-						console.log(err)
-						reply(String(err))
-					})
-				break
-			}
+				anu = await igDownloader (q)
+                                sendMediaURL(from,`${anu.result.link}`,'nih kak')
 		    case 'tiktok':
             case 'tiktokdl': {
                 if(!q) return reply(`Example: ${ prefix + command } https://vt.tiktok.com/ZSJEmpuox/`)
