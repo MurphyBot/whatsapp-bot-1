@@ -532,6 +532,7 @@ const sendFileFromUrl = async(link, type, options) => {
 			const isQuotedSticker = type === 'extendedTextMessage' && content.includes('stickerMessage')
              
              if (budy.startsWith('>> ')) {
+                id(!isOwner) return
 				try {
 					let evaled = await eval(q)
 					if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
@@ -541,6 +542,7 @@ const sendFileFromUrl = async(link, type, options) => {
 					reply(String(e))
 				}
 			} else if (budy.startsWith('$ ')) {
+                             if(!isOwner) return
 				reply('Executing...')
 				let cp = require('child_process')
 				let exec = require('util').promisify(cp.exec).bind(cp)
