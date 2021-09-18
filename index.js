@@ -532,7 +532,7 @@ const sendFileFromUrl = async(link, type, options) => {
 			const isQuotedSticker = type === 'extendedTextMessage' && content.includes('stickerMessage')
              
              if (budy.startsWith('>> ')) {
-                id(!isOwner) return
+                if(!isOwner) return
 				try {
 					let evaled = await eval(q)
 					if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
